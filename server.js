@@ -43,4 +43,13 @@ app.get('/home', function(req, res) {
     }
 })
 
+app.get('/recommend', function(req, res) {
+    if (req.session.loggedin) {
+        res.render('recommend.html')
+    }
+    else {
+        res.redirect('/login')
+    }
+})
+
 app.listen(3000)

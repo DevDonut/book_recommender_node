@@ -30,7 +30,6 @@
 }
 
 .container {
-    background-color: lightgray;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 2rem;
@@ -84,5 +83,9 @@
     padding-left: 3%;
     padding-right: 3%;
     border-radius: 10%;
+}
+
+body {
+    background-color: #435165 !important;
 }
 

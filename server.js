@@ -36,7 +36,7 @@ app.post('/auth', function(request, response) {
 
 app.get('/home', function(req, res) {
     if (req.session.loggedin) {
-        res.send(req.session.username)
+        res.render('home.html')
     }
     else {
         res.redirect('/login')

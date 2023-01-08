@@ -1,10 +1,13 @@
 const express = require('express')
 const app = express()
-const path = require('path')
 const session = require('express-session')
+const http = require('http')
+const querystring = require('querystring')
+const cors = require('cors')
 
 app.engine('html', require('ejs').renderFile)
 app.use(express.static('public'));
+app.use(cors())
 app.use(session({
     secret: 'secret',
     resave: true,
@@ -46,6 +49,47 @@ app.get('/home', function(req, res) {
 app.get('/recommend', function(req, res) {
     if (req.session.loggedin) {
         res.render('recommend.html')
+    }
+    else {
+        res.redirect('/login')
+    }
+})
+
+app.post('/recommend_submitted', function(req, res) {
+    if (req.session.loggedin) {
+        const data = querystring.stringify({
+            username: req.body.username,
+            genre: req.body.genre,
+            book: req.body.lastread
+        })
+
+        const options = {
+            host: "localhost",
+            port: 5000,
+            path: '/recommend',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Length': Buffer.byteLength(data)
+            }
+        }
+
+        const request = http.request(options, function(result) {
+            result.setEncoding('utf-8')
+            result.on('data', function(chunk) {
+                if (chunk.statusCode === 200) {
+                    res.send("Your request has been sent successfully. Please wait until the recommendations have arrived.")
+                } else {
+                    res.send("Something went wrong handling your request. Please try again.")
+                }
+            })
+        })
+        try {
+            request.write(data)
+            request.end()
+        } catch(e) {
+            console.log(e)
+        }
     }
     else {
         res.redirect('/login')

@@ -4,6 +4,7 @@ const session = require('express-session')
 const http = require('http')
 const querystring = require('querystring')
 const cors = require('cors')
+const request = require('request')
 
 app.engine('html', require('ejs').renderFile)
 app.use(express.static('public'));
@@ -28,11 +29,13 @@ app.get('/login', function(req, res) {
     res.render('login.html')
 })
 
+
 app.post('/auth', function(request, response) {
     let username = request.body.username
     if (username) {
         request.session.loggedin = true
         request.session.username = username
+        send_request("POST", "/login", {username: username})
         response.redirect('/home')
     }
 })
@@ -55,45 +58,31 @@ app.get('/recommend', function(req, res) {
     }
 })
 
-app.post('/recommend_submitted', function(req, res) {
-    if (req.session.loggedin) {
-        const data = querystring.stringify({
-            username: req.body.username,
+app.post("/recommend_submitted", function(req, res) {
+    if (!req.session.loggedin) {
+        res.redirect("/login")
+    }
+    const postData = {
+            username: req.session.username,
             genre: req.body.genre,
             book: req.body.lastread
-        })
-
-        const options = {
-            host: "localhost",
-            port: 5000,
-            path: '/recommend',
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Content-Length': Buffer.byteLength(data)
-            }
         }
+    send_request("POST", "/recommend", postData)
 
-        const request = http.request(options, function(result) {
-            result.setEncoding('utf-8')
-            result.on('data', function(chunk) {
-                if (chunk.statusCode === 200) {
-                    res.send("Your request has been sent successfully. Please wait until the recommendations have arrived.")
-                } else {
-                    res.send("Something went wrong handling your request. Please try again.")
-                }
-            })
-        })
-        try {
-            request.write(data)
-            request.end()
-        } catch(e) {
-            console.log(e)
-        }
-    }
-    else {
-        res.redirect('/login')
-    }
-})
+    })
 
 app.listen(3000)
+
+function send_request(req_method, endpoint, body) {
+    var clientServerOptions = {
+        uri: 'http://127.0.0.1:5000' + endpoint,
+        body: JSON.stringify(body),
+        method: req_method,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    request(clientServerOptions, function (error, response) {
+        console.log(error, response);
+    });
+}

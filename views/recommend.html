@@ -18,7 +18,7 @@
 
 <div class="recommend">
   <h1>Recommend new to-reads</h1>
-  <form action="http://localhost:5000/recommend" method="post">
+  <form action="/recommend_submitted" id="recommendForm" method="post">
     <div>
     <label for="genre">
       <!-- font awesome icon -->
@@ -30,7 +30,7 @@
     <label for="lastread">
       <i class="fas fa-book"></i>
     </label>
-    <input type="text" name="lastread" placeholder="Book to base recommendation on" id="lastread">
+    <input type="text" name="lastread" placeholder="Book to base recommendation on" id="lastread" required>
     </div>
     <input type="submit" value="Recommend">
   </form>

@@ -49,6 +49,14 @@ app.get('/home', function(req, res) {
     }
 })
 
+app.get('/recommendations', function(req, res) {
+    if (req.session.loggedin) {
+        send_request("GET", "/get_recommendations", {username: req.session.username }, res, 'recommendations.html')
+    } else {
+        res.redirect("/login")
+    }
+})
+
 app.get('/recommend', function(req, res) {
     if (req.session.loggedin) {
         res.render('recommend.html')
@@ -68,13 +76,13 @@ app.post("/recommend_submitted", function(req, res) {
             book: req.body.lastread
         }
     send_request("POST", "/recommend", postData)
-
+    res.redirect('/home')
     })
 
 app.listen(3000)
 
-function send_request(req_method, endpoint, body) {
-    var clientServerOptions = {
+function send_request(req_method, endpoint, body, res, to_render) {
+    const clientServerOptions = {
         uri: 'http://127.0.0.1:5000' + endpoint,
         body: JSON.stringify(body),
         method: req_method,
@@ -82,7 +90,20 @@ function send_request(req_method, endpoint, body) {
             'Content-Type': 'application/json'
         }
     }
-    request(clientServerOptions, function (error, response) {
-        console.log(error, response);
+    request(clientServerOptions, function (error, response, body) {
+        if (req_method === "GET") {
+            const list = parse_list(body)
+            res.render(to_render, {list: list})
+        }
     });
+}
+
+function parse_list(body) {
+    const to_parse = JSON.parse(body)
+    let result = '<ul>'
+    for (let i = 0; i < to_parse.length; i++) {
+        result += '<li>' + to_parse[i] + '</li>'
+    }
+    result += '</ul>'
+    return result
 }

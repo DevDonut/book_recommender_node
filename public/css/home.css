@@ -69,20 +69,20 @@
     border-radius: 10%;
 }
 
-.recommendedLast {
-    background: #5b6574;
-    display: inline-block;
-    padding-top: 2%
+.recommendedLast button{
+    width: 100%;
+    padding: 15px;
+    background-color: #3274d6;
+    border: 0;
+    cursor: pointer;
+    font-weight: bold;
+    color: #ffffff;
+    transition: background-color 0.2s;
 }
 
-.recommendedLast label {
-    font-size: 30px;
-    font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
-    background: #1abc9c;
-    margin: auto;
-    padding-left: 3%;
-    padding-right: 3%;
-    border-radius: 10%;
+.recommendedLast button:hover {
+    background-color: #2868c7;
+    transition: background-color 0.2s;
 }
 
 body {

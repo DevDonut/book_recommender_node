@@ -1,0 +1,51 @@
+.header {
+    width: 100%;
+    background: #1abc9c;
+    color: white;
+    font-size: 50px;
+    display: inline-flex;
+    height: 10%;
+}
+
+#profileform {
+    float: right;
+    padding-left: 2%;
+    margin: auto
+}
+
+#profileform:hover {
+    color: #2868c7;
+    transition: color 0.2s;
+}
+
+#homeform {
+    float: right;
+    padding-left: 2%;
+    margin: auto
+}
+
+#homeform:hover {
+    color: #2868c7;
+    transition: color 0.2s;
+}
+
+body {
+    background-color: #435165 !important;
+}
+
+ul:nth-child(even) {
+    background-color: #1abc9c;
+}
+
+ul:nth-child(odd) {
+    color: #5b6574;
+}
+
+ul {
+    font-size: 30px;
+}
+
+#listdiv {
+    background-color: #1abc9c
+}
+

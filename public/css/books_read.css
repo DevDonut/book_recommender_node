@@ -1,0 +1,96 @@
+.header {
+    width: 100%;
+    background: #1abc9c;
+    color: white;
+    font-size: 50px;
+    display: inline-flex;
+    height: 10%;
+    border-radius: 5px;
+}
+
+#profileform {
+    float: right;
+    padding-left: 2%;
+    margin: auto
+}
+
+#profileform:hover {
+    color: #2868c7;
+    transition: color 0.2s;
+}
+
+#homeform {
+    float: right;
+    padding-left: 2%;
+    margin: auto
+}
+
+#homeform:hover {
+    color: #2868c7;
+    transition: color 0.2s;
+}
+
+body {
+    background-color: #435165 !important;
+}
+
+ul {
+    font-size: 30px;
+    width: 100%;
+    display: inline-block;
+    text-align: left;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+li {
+    margin-left: 2%;
+    margin-right: 2%;
+    border-radius: 5px;
+    padding: 2%;
+    margin-bottom: 2%;
+    font-family: monospace;
+}
+
+li:nth-child(odd) {
+    background-color: #5b6574;
+    color: #dee0e4;
+}
+
+li:nth-child(even) {
+    background-color: #dee0e4;
+    color: #5b6574;
+}
+
+#listdiv {
+    background-color: #1abc9c;
+    text-align: center;
+    border-radius: 5px;
+}
+
+#container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 2rem;
+    text-align: center;
+    padding-top: 5rem
+}
+
+button {
+    background-color: #1abc9c;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    width: 100%;
+    height: 100%;
+    font-size: 18px;
+    color: aliceblue;
+}
+
+button:hover {
+    background-color: #2868c7;
+    transition: background-color 0.2s;
+}
+

@@ -51,7 +51,9 @@ app.get('/home', function(req, res) {
 
 app.get('/recommendations', function(req, res) {
     if (req.session.loggedin) {
-        send_request("GET", "/get_recommendations", {username: req.session.username }, res, 'recommendations.html')
+        const empty_text = "The recommendation you requested has not yet been worked on. Please try again at a later time."
+        send_request("GET", "/get_recommendations", {username: req.session.username }, res, 'recommendations.html',
+            empty_text)
     } else {
         res.redirect("/login")
     }
@@ -79,9 +81,19 @@ app.post("/recommend_submitted", function(req, res) {
     res.redirect('/home')
     })
 
+app.get("/books", function(req, res) {
+    if (req.session.loggedin) {
+        const empty_text = "You have not yet added read books to your list."
+        send_request("GET", "/get_read_books", {username: req.session.username }, res,
+            'books_read.html', empty_text)
+    } else {
+        res.redirect('/login')
+    }
+})
+
 app.listen(3000)
 
-function send_request(req_method, endpoint, body, res, to_render) {
+function send_request(req_method, endpoint, body, res, to_render, empty_text) {
     const clientServerOptions = {
         uri: 'http://127.0.0.1:5000' + endpoint,
         body: JSON.stringify(body),
@@ -93,10 +105,11 @@ function send_request(req_method, endpoint, body, res, to_render) {
     request(clientServerOptions, function (error, response, body) {
         try {
             if (req_method === "GET") {
-                const list = parse_list(body)
+                const list = parse_list(body, empty_text)
                 res.render(to_render, {list: list})
             }
         } catch (error) {
+            console.log(error)
             if (endpoint === '/home') {
                 res.redirect('/login')
             } else {
@@ -107,10 +120,10 @@ function send_request(req_method, endpoint, body, res, to_render) {
     });
 }
 
-function parse_list(body) {
+function parse_list(body, empty_text) {
     const to_parse = JSON.parse(body)
     if (to_parse.length === 0) {
-        return "<h1>The recommendation you requested has not yet been worked on. Please try again at a later time.</h1>"
+        return '<h1>' + empty_text + '</h1>'
     }
 
     let result = '<ul>'

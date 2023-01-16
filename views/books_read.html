@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Read Books</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <link href="/css/books_read.css" rel="stylesheet" type="text/css">
+</head>
+<body style="background-color: lightgray">
+<div class="header">
+    <h2 class="username"></h2>
+    <form id="profileform" action="/login" method="get"><i onclick="this.parentNode.submit();" class="fas fa-user" id="profile"></i></form>
+    <form id="homeform" action="/home" method="get"><i onclick="this.parentNode.submit();" class="fas fa-home" id="home"></i></form>
+</div>
+<div id="container">
+    <div id="listdiv">
+        <h1>Your Read Books</h1>
+        <%- list %>
+    </div>
+    <form class="buttonform" action="/add_book"><button onclick="this.parentNode.submit()">Add new book</button></form>
+</div>
+
+
+</body>
+</html>

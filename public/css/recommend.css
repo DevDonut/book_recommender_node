@@ -5,6 +5,7 @@
     font-size: 50px;
     display: inline-flex;
     height: 10%;
+    border-radius: 5px;
 }
 
 #profileform {

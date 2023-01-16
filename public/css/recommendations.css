@@ -5,6 +5,7 @@
     font-size: 50px;
     display: inline-flex;
     height: 10%;
+    border-radius: 5px;
 }
 
 #profileform {
@@ -33,19 +34,37 @@ body {
     background-color: #435165 !important;
 }
 
-ul:nth-child(even) {
-    background-color: #1abc9c;
+ul {
+    font-size: 30px;
+    width: 100%;
+    display: inline-block;
+    text-align: left;
+    list-style-type: none;
+    padding-left: 0;
 }
 
-ul:nth-child(odd) {
+li {
+    margin-left: 2%;
+    margin-right: 2%;
+    border-radius: 5px;
+    padding: 2%;
+    margin-bottom: 2%;
+    font-family: monospace;
+}
+
+li:nth-child(odd) {
+    background-color: #5b6574;
+    color: #dee0e4;
+}
+
+li:nth-child(even) {
+    background-color: #dee0e4;
     color: #5b6574;
 }
 
-ul {
-    font-size: 30px;
-}
-
 #listdiv {
-    background-color: #1abc9c
+    background-color: #1abc9c;
+    text-align: center;
+    border-radius: 5px;
 }
 

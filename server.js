@@ -91,15 +91,28 @@ function send_request(req_method, endpoint, body, res, to_render) {
         }
     }
     request(clientServerOptions, function (error, response, body) {
-        if (req_method === "GET") {
-            const list = parse_list(body)
-            res.render(to_render, {list: list})
+        try {
+            if (req_method === "GET") {
+                const list = parse_list(body)
+                res.render(to_render, {list: list})
+            }
+        } catch (error) {
+            if (endpoint === '/home') {
+                res.redirect('/login')
+            } else {
+                res.redirect('/home')
+            }
         }
+
     });
 }
 
 function parse_list(body) {
     const to_parse = JSON.parse(body)
+    if (to_parse.length === 0) {
+        return "<h1>The recommendation you requested has not yet been worked on. Please try again at a later time.</h1>"
+    }
+
     let result = '<ul>'
     for (let i = 0; i < to_parse.length; i++) {
         result += '<li>' + to_parse[i] + '</li>'
